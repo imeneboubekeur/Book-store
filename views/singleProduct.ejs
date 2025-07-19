@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>admin</title> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/single.css"> </head>
+<body>
+    <section class="banner">
+   <ul class="nav-links">
+ 
+  <li>
+    <a href="/products">Books</a>
+  </li>
+<% if (user) { %>
+<li>
+    <a href="/cart">My Cart</a>
+   </li><% } %>
+    <li>Contact Us</li>
+  <% if (user) { %>
+  <li >
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  </li>
+<% } else { %>
+  <li class="button">
+    <a href="/signup">Signup</a>
+  </li>
+  <li class="button">
+    <a href="/login">Login</a>
+  </li>
+<% } %>
+
+
+   
+     
+    
+   </ul>
+
+</section>
+<div class="search-bar">
+  <form action="/search" method="GET">
+    <input type="text" name="query" placeholder="Search books..." required>
+    <button type="submit">Search</button>
+  </form>
+</div>
+     <main class="single">
+        <div class="smallTitle">Home > <%= product.title %></div>
+        <div class="container">
+        <div class="image">
+        <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+
+        </div>
+        <div class="infos">
+    <div class="title"><%= product.title %></div>
+    <div class="additions">Brand:Amazona</div>
+<div class="additions">Availability:In stock</div>
+        <div class="price">$<%= product.price %></div>
+                <div class="description additions"><%= product.description %></div>
+                <div class="card__actions">
+                            <form action="/cart" method="post">
+                                <input type="hidden" name="productId" value="<%= product._id %>">  
+                                <button class="btn"  type="submit">Add to Cart</button>
+
+                            </form>
+                            </div>
+</div>
+</div>
+
+
+<section class="desSec">
+<div class="desTitle">
+    DESCRIPTION
+</div>
+<div class="desText">
+    A magical competition between two young illusionists unfolds within a mysterious,
+     wandering circus that only appears at night. As their powers grow, so does their love—and the stakes 
+     become higher than they ever imagined.A magical competition between two young illusionists unfolds within a mysterious, wandering circus that only appears at night. As their powers grow, so does their love—and the stakes become higher than they ever imagined.
+A magical competition between two young illusionists unfolds within a mysterious,
+     wandering circus that only appears at night. As their powers grow, so does their love—and the stakes 
+     become higher than they ever imagined.A magical competition between two young illusionists unfolds within a mysterious, wandering circus that only appears at night. As their powers grow, so does their love—and the stakes become higher than they ever imagined.
+
+    </div>
+    </section>
+    <section class="otherPro">
+<div class="desTitle">
+    OTHER PRODUCTS
+</div>
+
+<% if (products.length > 0) { %>
+                <div class="grid">
+
+                    <% for (let product of products) { %>
+                        <div class="grid-items">
+                        <div class="product__title">
+                                 
+                                    <%= product.title %>
+                                
+                                </div>
+                            <div class="card__image">
+                                <a href="products/<%= product._id %>">
+                                <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+
+                                </a>
+                                
+                            </div>
+                            <div class="card__content">
+                                <h2 class="product__price">$
+                                    <%= product.price %>
+                                </h2>
+                                
+                            </div>
+                            <!--<form action="/delete-product" method="POST">
+                                <input type="hidden" value="<%= product._id %>" name="productId">
+                                <button class="btn" type="button" >Delete</button>
+                            </form>-->
+                           <!-- <div class="card__actions">
+                            <form action="/cart" method="post">
+                                <input type="hidden" name="productId" value="<%= product._id %>">  
+                                <button class="btn"  type="submit">Add to Cart</button>
+
+                            </form>
+                            </div>-->
+                </div> 
+                        <% } %>
+                </div>
+                <% } else { %>
+                    <h1>No Products Found!</h1>
+                    <% } %>
+                    </section>
+    </main>
+     <footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>About Us</h3>
+      <p>We sell amazing books to help you grow.</p>
+    </div>
+    <div class="footer-section links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/books">Books</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-section contact">
+      <h3>Contact</h3>
+      <p>Email: support@example.com</p>
+      <p>Phone: +123 456 7890</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 BookStore. All rights reserved.
+  </div>
+</footer>
+<%- include('./end.ejs') %>   

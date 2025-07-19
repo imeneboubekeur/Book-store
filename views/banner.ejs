@@ -1,0 +1,13 @@
+  <ul class="banner">
+    <% if (user && user.role === 'admin') { %>
+<li class="banner-item">
+        <a href="/admin/add-product"> add product</a>
+    </li><% }
+    
+     <li class="banner-item">
+        <a href="/admin/products"> products</a>
+    </li>
+     <li class="banner-item">
+        <a href="/products"> products</a>
+    </li>
+  </ul>

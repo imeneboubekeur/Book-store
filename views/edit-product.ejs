@@ -1,0 +1,57 @@
+<%- include('./head.ejs') %>
+</head>
+<body>
+<section class="banner">
+   <ul class="nav-links">
+    <li>
+    <a href="/admin/add-product">Add Product</a>
+  </li>
+
+<li>
+    <a href="/admin/products">My Books</a>
+   </li>
+    
+    <li>Contact Us</li>
+    <% if (user) { %>
+  <li >
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  </li>
+<% } else { %>
+  <li class="button">
+    <a href="/signup">Signup</a>
+  </li>
+  <li class="button">
+    <a href="/login">Login</a>
+  </li>
+<% } %>
+ 
+    
+   </ul>
+
+</section>
+<main>
+        <form class="product-form" action="/admin/edit-product" method="POST">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" value="<%= product.title %>">
+            </div>
+            <div class="form-control">
+                <label for="imageUrl">Image URL</label>
+                <input type="text" name="imageUrl" id="imageUrl" value="<%=product.imageUrl%> ">
+            </div>
+            <div class="form-control">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price" step="0.01" value="<%= product.price %> ">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" rows="5"> <%=product.description%></textarea>
+            </div>
+           
+                <input type="hidden" value="<%= product._id %>" name="productId">
+           
+
+            <button class="btn" type="submit">Update Product</button>
+        </form>

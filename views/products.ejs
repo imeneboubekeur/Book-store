@@ -1,0 +1,152 @@
+<%- include('./head.ejs') %>
+</head>
+
+<body>
+    <section class="banner">
+   <ul class="nav-links">
+ 
+  <li>
+    <a href="/products">Books</a>
+  </li>
+<% if (user) { %>
+<li>
+    <a href="/cart">My Cart</a>
+   </li><% } %>
+    <li>Contact Us</li>
+  <% if (user) { %>
+  <li >
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  </li>
+<% } else { %>
+  <li class="button">
+    <a href="/signup">Signup</a>
+  </li>
+  <li class="button">
+    <a href="/login">Login</a>
+  </li>
+<% } %>
+
+
+   
+     
+    
+   </ul>
+
+</section>
+<div class="search-bar">
+  <form action="/search" method="GET">
+    <input type="text" name="query" placeholder="Search books..." required>
+    <button type="submit">Search</button>
+  </form>
+</div>
+        <main class="main-container">
+        
+                    <div class="title"><h1 class="arimo-regular">PRODUCTS</h1></div>
+        <div class="filter-bar">
+    <!-- View icons -->
+    <div class="view-icons">
+      <button class="active">☰</button>
+      <button>▦</button>
+    </div>
+
+    <!-- Showing range -->
+    <div class="text-muted">Showing 1 to 8 of 13 items</div>
+
+    <!-- Show dropdown -->
+    <div class="filter-group">
+      <label for="show-count">Show:</label>
+      <select id="show-count">
+        <option>10</option>
+        <option>25</option>
+        <option>50</option>
+        <option>100</option>
+      </select>
+    </div>
+
+    <!-- Sort dropdown -->
+    <div class="filter-group">
+      <label for="sort-by">Sort by:</label>
+      <select id="sort-by">
+        <option>Alphabetically, A-Z</option>
+        <option>Alphabetically, Z-A</option>
+        <option>Price, Low to High</option>
+        <option>Price, High to Low</option>
+        <option>Newest</option>
+      </select>
+    </div>
+  </div>
+            <% if (prods.length > 0) { %>
+                <div class="grid">
+
+                    <% for (let product of prods) { %>
+                        <div class="grid-items">
+                        <div class="product__title">
+                                 
+                                    <%= product.title %>
+                                
+                                </div>
+                            <div class="card__image">
+                                <a href="products/<%= product._id %>">
+                                <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+
+                                </a>
+                                
+                            </div>
+                            <div class="card__content">
+                                <h2 class="product__price">$
+                                    <%= product.price %>
+                                </h2>
+                                
+                            </div>
+                            <!--<form action="/delete-product" method="POST">
+                                <input type="hidden" value="<%= product._id %>" name="productId">
+                                <button class="btn" type="button" >Delete</button>
+                            </form>-->
+                           <!-- <div class="card__actions">
+                            <form action="/cart" method="post">
+                                <input type="hidden" name="productId" value="<%= product._id %>">  
+                                <button class="btn"  type="submit">Add to Cart</button>
+
+                            </form>
+                            </div>-->
+                </div> 
+                        <% } %>
+                </div>
+                <% } else { %>
+                    <h1>No Products Found!</h1>
+                    <% } %>
+                    <div class="pages">
+                        <div>1</div>
+                        <div>2</div>
+                        <div>3</div>
+
+                    </div>
+        </main>
+         <footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>About Us</h3>
+      <p>We sell amazing books to help you grow.</p>
+    </div>
+    <div class="footer-section links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/books">Books</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-section contact">
+      <h3>Contact</h3>
+      <p>Email: support@example.com</p>
+      <p>Phone: +123 456 7890</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 BookStore. All rights reserved.
+  </div>
+</footer>
+        <%- include('./end.ejs') %>   
+                    <!--<script src="/js/admin.js"></script>-->    
