@@ -75,7 +75,7 @@
  
             <td > 
                                 <input class="delete0" type="hidden" value="<%= p.productId %>" name="productId">
-                                <button class="btn" type="submit" onclick="deleteProduct(this)">Delete</button>
+                                <button class="btn" type="submit" onclick="deleteProduct(this)">X</button>
                                       
                            </td>
                             </tr>
@@ -93,6 +93,9 @@
                                
                                 <button class="btnOrder" type="submit" >Order now!</button>
                             </form>
+                            <form action="/create-checkout-session" method="POST">
+  <button class="btnOrder" type="submit">Pay Now</button>
+</form>
 
             <% } else { %>
                 <h1>No Products in Cart!</h1>

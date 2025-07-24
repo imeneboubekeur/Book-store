@@ -3,7 +3,10 @@
 </head>
 <body>
 <section class="banner">
-   <ul class="nav-links">
+   <div class="bookish">Bookish.com</div>
+      <div class="linkss">
+        <div class="menu-icon" id="menu-icon">☰</div>
+   <ul class="nav-links" id="nav-links">
  
   
 
@@ -20,6 +23,7 @@
   </li>  
     
    </ul>
+      </div>
 
 </section>
 <section class="description">
@@ -27,5 +31,7 @@
     <p>Simplicity in design is not about removing elements, but about focusing on what truly matters. A clean and well-structured interface helps users navigate with ease and clarity</p>
     <button>EXPLORE</button>
 </section>
+           <%- include('./footer.ejs') %>  
 
 <%- include('./end.ejs') %>  
+                    <script src="/js/banner.js"></script>  

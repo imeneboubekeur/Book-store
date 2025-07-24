@@ -15,9 +15,14 @@ router.post('/logout', (req, res) => {
     if (err) {
       console.log(err);
       return res.redirect('/'); // fallback
-    }
+    }  
     res.redirect('/admin');
-  });
+  });  
 });
-
+router.get('/forgot-password', (req, res) => {
+  res.render('forgot-password');
+});
+router.post('/forgot-password',authController.forgotPass)
+router.get('/reset-password/:token',authController.resetPass)
+router.post('/reset-password',authController.postResetPass)
 module.exports = router;

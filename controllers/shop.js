@@ -6,6 +6,7 @@ const Order=require('../models/order')
 const mongodb = require('mongodb');
 const getDb = require('../databse/database').getDb;
 const PDFDocument = require('pdfkit');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 //const path = require('path');
 //const fs = require('fs');
@@ -15,7 +16,7 @@ const PDFDocument = require('pdfkit');
 
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  /*Product.fetchAll()
     .then(products => {
       res.render('products', {
         prods: products,
@@ -25,7 +26,43 @@ exports.getProducts = (req, res, next) => {
     })
     .catch(err => {
       console.log(err);
-    });
+    });*/
+    const db = getDb();
+
+    // 1. Get page and perPage from query string
+  let page = parseInt(req.query.page) || 1;
+  let perPage = parseInt(req.query.perPage) || 6;
+  let  totalPages
+  let pages
+    db.collection('products').countDocuments().then (totalUsers=>{   
+      pages=totalUsers
+      totalPages = Math.ceil(totalUsers / perPage);
+      console.log('total pages',totalPages)
+
+  // 2. Calculate skip value
+  let skip = (page - 1) * perPage;
+
+  // 3. Fetch users from database (example with MongoDB)
+   return db.collection('products')
+    .find({})
+    .skip(skip)
+    .limit(perPage)
+    .toArray().then(products=>{res.render('products', {
+    prods:products,
+    page,
+    perPage,
+    totalPages,pages
+  });}).catch(err=>{
+          console.error('Error fetching products:', err);
+
+      res.status(400).json( 
+        { status:'fails',message: 'database error!' });
+  })
+})
+
+
+  // 4. Render the EJS template
+  
 };
 
 exports.signleProduct=(req,res,next)=>{
@@ -51,9 +88,12 @@ db.collection('products')
         path: '/products'
       });
   })
-  .catch(err => {
-    console.error(err);
-  });
+  .catch(err=>{
+          console.error( err);
+
+      res.status(500).json( 
+        { status:'fails',message: 'database error!' });
+  })
 
         //console.log('updaaate1', product._id)
     
@@ -61,6 +101,8 @@ db.collection('products')
       })
       .catch(err => {
         console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'database error!' });
       });
 }
 
@@ -83,7 +125,11 @@ exports.getCart=(req,res,next)=>{
     
    
    
-  })
+  }) .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'database error!' });
+      });
 }
 
 /*exports.postCart = (req, res, next) => {
@@ -144,7 +190,11 @@ Product.findById(prodId).then(product=>{
   console.log('priiice',price)
     Cart.addToCart(req.user._id,prodId,title,parseFloat(price),imageUrl).then(()=>{
         res.redirect('/cart')
-    })
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'database error!' });
+      });
 
 })
    
@@ -172,7 +222,11 @@ exports.postAddToOrders=(req,res,next)=>{
 
     Order.addToOrders(userId,prodId,quantity).then(()=>{
       res.redirect('/orders')
-    })
+    }) .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
 
   
 
@@ -195,7 +249,11 @@ exports.getOrders=(req,res,next)=>{
         
       isAuthenticated: req.session.isLoggedIn
     });          // the latest order
-    });
+    }) .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
     
     
    
@@ -253,7 +311,7 @@ exports.newOrder=(req,res,next)=> {
         })
       })
     .then(() => {
-      res.redirect('/cart')
+      res.redirect('/orders')
       console.log('Order created and cart cleared');
     })
     .catch(err => {
@@ -335,7 +393,54 @@ db.collection('products')
     console.log(products); // all products except those with the excluded address
   })
   .catch(err => {
-    console.error(err);
-  });
+      console.log(err);
+      res.status(500).send('Internal server error');
+    });
 
 }
+
+exports.search=(req,res,next)=>{ 
+    const query = req.query.q;
+  const db=getDb();
+
+  db.collection('products')
+    .find({ title: { $regex: query, $options: 'i' } }) // case-insensitive
+    .toArray()
+    .then(books => {
+      res.render('search-results', { books, query });
+    })
+    .catch(err => {
+      console.error(err);
+      res.redirect('/');
+    });
+} 
+
+exports.postPay=(req,res,next)=>{
+   const db=getDb();
+   return db.collection('cart').findOne({idUser:new mongodb.ObjectId(req.user._id)}).then(cart=>{
+     const line_items = cart.products.map(item => ({
+    price_data: {
+      currency: 'usd',
+      product_data: { name: item.title },
+      unit_amount: item.price * 100, // Stripe expects cents
+    },
+    quantity: item.qty
+  }))
+
+  stripe.checkout.sessions.create({
+  payment_method_types: ['card'],
+  mode: 'payment',
+  line_items: line_items,
+  success_url: 'http://localhost:3000/success',
+  cancel_url: 'http://localhost:3000/cancel',
+})
+.then(session => {
+  res.redirect(303, session.url); // <== access it here
+})
+.catch(error => {
+  console.error('Stripe error:', error);
+  res.status(500).send('Payment initialization failed');
+});
+})
+  }
+ 

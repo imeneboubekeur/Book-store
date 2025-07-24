@@ -8,9 +8,9 @@ const deleteProduct = btn => {
   const productElement = btn.closest('tr');
 
   fetch('/cart-delete-item'+ productId, {
-    method: 'DELETE',
+    method: 'DELETE', 
     /*headers: {
-      'csrf-token': csrf
+      'csrf-token': csrf 
     }*/
   })
     .then(result => {

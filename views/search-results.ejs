@@ -3,11 +3,7 @@
 
 <body>
     <section class="banner">
-      <div class="bookish">Bookish.com</div>
-      <div class="linkss">
-        <div class="menu-icon" id="menu-icon">☰</div>
-   <ul class="nav-links" id="nav-links">
-    
+   <ul class="nav-links">
  
   <li>
     <a href="/products">Books</a>
@@ -37,7 +33,7 @@
      
     
    </ul>
-</div>
+
 </section>
 <div class="search-bar">
   <form action="/search" method="GET">
@@ -48,43 +44,12 @@
         <main class="main-container">
         
                     <div class="title"><h1 class="arimo-regular">PRODUCTS</h1></div>
-        <div class="filter-bar">
-    <!-- View icons -->
-    <div class="view-icons">
-      <button class="active">☰</button>
-      <button>▦</button>
-    </div>
+      <h1>Search results for "<%= query %>"</h1>
 
-    <!-- Showing range -->
-    <div class="text-muted">Showing <%= page %> to <%= perPage %> of <%= pages %> items</div>
-
-    <!-- Show dropdown -->
-    <div class="filter-group">
-      <label for="show-count">Show:</label>
-      <select id="show-count">
-        <option>10</option>
-        <option>25</option>
-        <option>50</option>
-        <option>100</option>
-      </select>
-    </div>
-
-    <!-- Sort dropdown -->
-    <div class="filter-group">
-      <label for="sort-by">Sort by:</label>
-      <select id="sort-by">
-        <option>Alphabetically, A-Z</option>
-        <option>Alphabetically, Z-A</option>
-        <option>Price, Low to High</option>
-        <option>Price, High to Low</option>
-        <option>Newest</option>
-      </select>
-    </div>
-  </div>
-            <% if (prods.length > 0) { %>
+<% if (books.length > 0) { %>
                 <div class="grid">
 
-                    <% for (let product of prods) { %>
+                    <% for (let product of books) { %>
                         <div class="grid-items">
                         <div class="product__title">
                                  
@@ -121,31 +86,11 @@
                 <% } else { %>
                     <h1>No Products Found!</h1>
                     <% } %>
-                    <!-- Pagination -->
-  <div class="pages">
-    <% if (page > 1) { %>
-     <a href="/products?page=<%= page - 1 %>&perPage=<%= perPage %>">Previous</a>
-    <% } %>
-
-    <% for (let i = 1; i <= totalPages; i++) { %>
-      <% if (i === page) { %>
-        <span class="current"><%= i %></span>
-      <% } else { %>
-        <a href="/products?page=<%= i %>&perPage=<%= perPage %>"><%= i %></a>
-      <% } %>
-    <% } %>
-
-    <% if (page < totalPages) { %>
-      <a href="/products?page=<%= page + 1 %>&perPage=<%= perPage %>">Next</a>
-    <% } %>
-  </div>
                   
 
                     
         </main>
-           <%- include('./footer.ejs') %>  
+                    <%- include('./footer.ejs') %>  
 
-        <%- include('./end.ejs') %>  
-       
- 
-                    <script src="/js/banner.js"></script>  
+        <%- include('./end.ejs') %>   
+                    <!--<script src="/js/admin.js"></script>-->    

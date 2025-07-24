@@ -43,10 +43,17 @@ body {
 
 
 .banner {
+  display:flex;
+  flex-direction: row;
   padding: 10px 30px;
   text-align: right; /* aligns inline-block elements to the right */
+gap:5%;
 }
-
+.linkss {
+    display: inline-block;
+  text-align: right; /* aligns inline-block elements to the right */
+flex:1 1 50%;
+}
 .nav-links {
   list-style: none;
   margin: 0;
@@ -60,7 +67,18 @@ body {
   font-size: 16px;
   vertical-align: middle;
 }
-
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+ a:link{
+text-decoration: none;
+}
+a:visited {
+ color:black;
+  text-decoration: none;
+}
 .nav-links  .button {
   padding: 8px 16px;
   font-size: 14px;
@@ -78,6 +96,39 @@ body {
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive layout */
+@media (max-width: 650px) {
+  .nav-links li{
+    padding:20px;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #ffffffbe;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
+.bookish{
+  font-size: 30px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color:#05E362;
+display:inline-block;
+text-align: left;
+
 }
 .arimo-regular{
    font-family: "Arimo", sans-serif;
@@ -190,29 +241,24 @@ body {
 /*.card__image img{
    
 }*/
-.card__image{
-  max-width:50%;
-   margin:0 auto;    
 
-}
 .card__image img {
   max-width:100%;
 }
-.product__price{
-  text-align: center;
-}
+
 .product__title{
-    text-align: center;
     margin-bottom:10px;
 }
 .main-container{
   margin:0 auto;
-  width:80%;
+  width:95%;
   margin-top:50px;
 }
 .grid{
-    display:flex;
-     flex-wrap: wrap;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap:60px;
+
      margin-top:50px;
           margin-bottom:50px;
 
@@ -271,8 +317,8 @@ body {
 }
 
 .search-bar {
-  width: 100%;
-  max-width: 500px;
+  width: 70%;
+  
   margin: 10px auto; /* center the bar */
 }
 
@@ -578,6 +624,10 @@ body {
   border-color: #05E362;
   outline: none;
 }
+  .link {
+    text-align: center;
+margin-top:20px;
+}
 
 .btn {
   width: 100%;
@@ -626,7 +676,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  min-width: 600px; /* So it can overflow on smaller screens */
+  min-width: 654px; /* So it can overflow on smaller screens */
 }
 
 th, td {
@@ -668,4 +718,39 @@ font-size:25px;
   table {
     font-size: 14px;
   }
+}
+
+.admin{
+  
+   width:95%;
+  margin:0 auto;
+  margin-top:50px;
+}
+.gridd{
+ margin-top:30px;
+display:grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap:60px;
+}
+.gridd .gridd-items{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap:10px;
+}
+.gridd img{
+  max-width:100%;
+}
+.gridd .card_actions{
+  display:flex;
+  flex-direction:row;
+  gap:10px;
+}
+.gridd .btn{
+  padding: 0.5rem 1rem;
+  text-align: center;
+  width:5rem;
+}
+.product_price{
+  color:#27ae60;
 }

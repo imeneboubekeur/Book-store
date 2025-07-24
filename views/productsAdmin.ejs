@@ -4,7 +4,10 @@
 <body>
     
 <section class="banner">
-   <ul class="nav-links">
+      <div class="bookish">Bookish.com</div>
+      <div class="linkss">
+        <div class="menu-icon" id="menu-icon">☰</div>
+   <ul class="nav-links" id="nav-links">
     <li>
     <a href="/admin/add-product">Add Product</a>
   </li>
@@ -31,42 +34,44 @@
  
     
    </ul>
+</div>
 
 </section>
 <div class="search-bar">
   <form action="/search" method="GET">
-    <input type="text" name="query" placeholder="Search books..." required>
+    <input type="text" name="q" placeholder="Search books..." required>
     <button type="submit">Search</button>
   </form>
 </div>
 
-        <main>
-
+        <main class="admin">
+<h1 class="arimo-regular"> MY BOOKS</h1>
             <% if (prods.length > 0) { %>
-                <div class="grid">
+                <div class="gridd">
                     <% for (let product of prods) { %>
                         <!--<article class="card product-item">
                             <header class="card__header">-->
-                                <div class="grid-items">
+                                <div class="gridd-items">
                                     <div>
-                                <h1 class="product__title">
+                                 
                                     <%= product.title %>
-                                </h1>
+                               
                                 </div>
                             <!--</header>-->
-                            <div class="card__image">
-                                <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
-                                <p class="product__description">
+                            <div class="card_image">
+                                <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                                
+                            </div>
+                            <p class="product_description">
                                     <%= product.description %>
                                 </p>
-                            </div>
-                            <div class="card__content">
-                                <h2 class="product__price">$
+                            <div class="card_content">
+                                <h2 class="product_price">$
                                     <%= product.price %>
                                 </h2>
                                 
                             </div>
-                           <div class="card__actions">
+                           <div class="card_actions">
                                     <a href="/admin/edit-product/<%= product._id %>" class="btn">Edit</a>
                                     <form action="/admin/delete-product" method="POST">
                                         <input type="hidden" value="<%= product._id %>" name="productId">
@@ -86,30 +91,7 @@
                     <h1>No Products Found!</h1>
                     <% } %>
         </main>
-       <footer class="footer">
-  <div class="footer-content">
-    <div class="footer-section about">
-      <h3>About Us</h3>
-      <p>We sell amazing books to help you grow.</p>
-    </div>
-    <div class="footer-section links">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/books">Books</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-section contact">
-      <h3>Contact</h3>
-      <p>Email: support@example.com</p>
-      <p>Phone: +123 456 7890</p>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    &copy; 2025 BookStore. All rights reserved.
-  </div>
-</footer>
- 
+                  <%- include('./footer.ejs') %>  
+
         <%- include('./end.ejs') %>   
-                    <!--<script src="/js/admin.js"></script> -->   
+                    <script src="/js/banner.js"></script>  

@@ -5,6 +5,8 @@ const Order=require('../models/order')
 const mongodb = require('mongodb');
 const getDb = require('../databse/database').getDb;
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const flash = require('connect-flash');
 const session = require('express-session');
 
@@ -64,7 +66,12 @@ exports.getLogin = (req, res, next) => {
         
       })
     })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
+
   };
  
   exports.postSignup=(req,res,next) => {
@@ -123,3 +130,76 @@ db.collection('user').findOne({email:email}).then(userDoc=>{
       res.redirect('/login');
     });
   };
+
+  exports.forgotPass=(req, res, next)=>{
+      const db=getDb();
+
+    const token = crypto.randomBytes(32).toString('hex');
+  const expires = Date.now() + 3600000;
+  db.collection('user').updateOne(
+  { email: req.body.email },
+  {
+    $set: {
+      resetToken : token,
+       resetTokenExpiry : expires
+    }
+  }
+).then(()=>{
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'iboubekeur72@gmail.com',
+      pass: 'vxzrtojdpivycrxc'
+    }
+  });
+
+  const mailOptions = {
+    from: 'iboubekeur72@gmail.com',
+    to: 'imenemimiii09@gmail.com',
+    subject: 'Password Reset',
+    html: `<p>Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password. This link expires in 1 hour.</p>`
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) return res.send('Error sending email',err);
+    res.send('Reset link sent to your email');
+  });
+})}
+
+ exports.resetPass=(req,res,next)=>{
+        const db=getDb();
+const token = req.params.token;
+ db.collection('user').findOne({ resetToken: token,
+  resetTokenExpiry: { $gt: Date.now()}
+}).then(user=>{
+   if (!user) return res.send('Token is invalid or expired');
+  res.render('reset-password', { token: req.params.token });
+ }).catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
+ }
+
+ exports.postResetPass=(req,res,next)=>{
+          const db=getDb();
+
+  const token=req.body.token;
+  db.collection('user').findOne({ resetToken: token,
+  resetTokenExpiry: { $gt: Date.now()}
+}).then(user=>{
+   if (!user) return res.send('Token is invalid or expired');
+   const newPass=req.body.newPassword
+   return bcrypt.hash(newPass,12).then(hashedPassword =>{
+    db.collection('user').updateOne({resetToken: token},
+     { $set:{
+      password: hashedPassword
+    }}
+    )
+   })
+ }).catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
+ }

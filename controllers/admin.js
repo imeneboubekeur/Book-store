@@ -1,17 +1,41 @@
 const Product=require('../models/product')
+const getDb = require('../databse/database').getDb;
 
 exports.admin=(req,res,next)=>{
     res.render('home',{
         path:'/home'
-    })
+    },
+    (err, html) => {
+  if (err) {
+    console.error('Error rendering add-product:', err);
+    return res.status(500).json({
+      status: 'fail',
+      message: 'View rendering failed: ' + err.message
+    });
+  }
+  res.send(html);
+});
+  
+
 }
+
 exports.addProduct=(req,res,next)=>{
-    res.render('add-product',{
-        path:'/admin/add-product'
-    })
-}
+    res.render('add-product', { path: '/admin/add-product' }, (err, html) => {
+  if (err) {
+    console.error('Error rendering add-product:', err);
+    return res.status(500).json({
+      status: 'fail',
+      message: 'View rendering failed: ' + err.message
+    });
+  }
+  res.send(html);
+});
+
+};
+
 exports.postAddProduct=(req,res,next)=>{
-    //console.log(req.body)
+    console.log('bodyy',req.body)
+    console.log('requser is',req.user)
 const title = req.body.title;
     //const imageUrl = req.body.imageUrl;
       const image = req.file;
@@ -31,15 +55,22 @@ const title = req.body.title;
       })
       .catch(err => {
         console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
       });
   };
   exports.products=(req,res,next)=>{
     Product.fetchByIdUser(req.user._id).then(products=>{
+console.log('cloudUrlll',products.imageUrl)
         res.render('productsAdmin',{
             path:'/admin/products',
             prods:products
         })
-    })
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
   }
 exports.getEditProduct=(req,res,next)=>{
     const prodId=req.params.productId
@@ -48,7 +79,11 @@ res.render('edit-product',{
         path:'/admin/edit-product',
         product:product
     })
-    })
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
 }
 exports.postEditProduct=(req,res,next)=>{
   const prodId = req.body.productId;
@@ -76,10 +111,36 @@ exports.postEditProduct=(req,res,next)=>{
       console.log('UPDATED PRODUCT!');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+   .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
 }
 exports.postDeleteProduct=(req,res,next)=>{
     const prodId=req.body.productId
 
-    Product.deleteById(prodId).then(res.redirect('/admin/products'))
+    Product.deleteById(prodId).then(()=>{
+      res.redirect('/admin/products')})
+    .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
 }
+
+exports.search=(req,res,next)=>{ 
+    const query = req.query.q;
+  const db=getDb();
+
+  db.collection('products')
+    .find({ title: { $regex: query, $options: 'i' }, idUser:req.user._id }) // case-insensitive
+    .toArray()
+    .then(books => {
+      res.render('search-results', { books, query });
+    })
+    .catch(err => {
+      console.error(err); 
+res.status(500).json( 
+        { status:'fails',message: 'database error!' })    });
+} 
