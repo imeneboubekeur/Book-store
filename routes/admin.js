@@ -12,7 +12,7 @@ router.get('/admin/products',isAdmin,isAuth,admin.products)
 router.get('/admin/edit-product/:productId',admin.getEditProduct)
 router.post('/admin/edit-product',admin.postEditProduct)
 router.delete('/delete-product/:productId',admin.postDeleteProduct)
-//router.post('/admin/delete-product',admin.postDeleteProduct)
+router.post('/admin/delete-product',admin.deleteProduct)
 
 router.get('/search',admin.search)
 module.exports=router; 

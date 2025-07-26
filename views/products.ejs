@@ -75,16 +75,20 @@
     </div>
 
     <!-- Sort dropdown -->
-    <div class="filter-group">
-      <label for="sort-by">Sort by:</label>
-      <select id="sort-by">
-        <option>Alphabetically, A-Z</option>
-        <option>Alphabetically, Z-A</option>
-        <option>Price, Low to High</option>
-        <option>Price, High to Low</option>
-        <option>Newest</option>
-      </select>
-    </div>
+     <div class="filter-group">
+     <form action="/products" method="GET">
+  <label for="sort">Sort by:</label>
+  <select name="sort" id="sort" onchange="this.form.submit()">
+     <option value="">Sort by</option>
+    <option value="az">Alphabetical A–Z</option>
+    <option value="za">Alphabetical Z–A</option>
+    <option value="low">Price, Low to High</option>
+    <option value="high">Price, High to Low</option>
+    <option value="newest">Newest</option>
+  </select>
+</form>
+        </div>
+    
   </div>
             <% if (prods.length > 0) { %>
                 <div class="grid">

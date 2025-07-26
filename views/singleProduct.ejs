@@ -76,11 +76,20 @@
         <div class="price">$<%= product.price %></div>
                 <div class="description additions"><%= product.description %></div>
                 <div class="card__actions">
+                  <% if (user.role==='buyer') { %>
                             <form action="/cart" method="post">
                                 <input type="hidden" name="productId" value="<%= product._id %>">  
                                 <button class="btn"  type="submit">Add to Cart</button>
 
                             </form>
+                            <% } else { %>
+                                                                  <a href="/admin/edit-product/<%= product._id %>" class="btn">Edit</a>
+
+                                        <form action="/admin/delete-product" method="POST">
+                                        <input class="delete0" type="hidden" value="<%= product._id %>" name="productId">
+                                        <button class="btn" type="submit" onclick="deleteProduct(this)">Delete</button>
+                                    </form>
+                                        <% } %>
                             </div>
 </div>
 </div>
@@ -173,3 +182,4 @@ A magical competition between two young illusionists unfolds within a mysterious
   </div>
 </footer>
 <%- include('./end.ejs') %>   
+                                        <script src="/js/js1.js"></script>   

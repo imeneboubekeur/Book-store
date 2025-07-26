@@ -138,6 +138,18 @@ console.log('current id ',prodIdd)
         { status:'fails',message: 'server error!' });
       });
 }
+exports.deleteProduct=(req,res,next)=>{
+    const prodId=req.body.productId
+     //const prodIdd=req.params.productId;
+    Product.deleteById(prodId).then(()=>{
+     return res.redirect('/admin/products')
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
+}
 
 exports.search=(req,res,next)=>{ 
     const query = req.query.q;

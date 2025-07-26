@@ -41,10 +41,22 @@ exports.getProducts = (req, res, next) => {
 
   // 2. Calculate skip value
   let skip = (page - 1) * perPage;
+const sortOption = req.query.sort;
 
+let sortCriteria = {};
+if (sortOption === 'az') {
+  sortCriteria = { title: 1 }; // A–Z
+} else if (sortOption === 'za') {
+  sortCriteria = { title: -1 }; // Z–A
+} else if (sortOption === 'low') {
+  sortCriteria = { price: 1 }; // Ascending
+} else if (sortOption === 'high') {
+  sortCriteria = { price: -1 }; // Descending
+} 
   // 3. Fetch users from database (example with MongoDB)
    return db.collection('products')
     .find({})
+     .sort(sortCriteria)
     .skip(skip)
     .limit(perPage)
     .toArray().then(products=>{
