@@ -76,7 +76,7 @@
         <div class="price">$<%= product.price %></div>
                 <div class="description additions"><%= product.description %></div>
                 <div class="card__actions">
-                  <% if (user.role==='buyer') { %>
+                  <% if (user && user.role==='buyer') { %>
                             <form action="/cart" method="post">
                                 <input type="hidden" name="productId" value="<%= product._id %>">  
                                 <button class="btn"  type="submit">Add to Cart</button>
