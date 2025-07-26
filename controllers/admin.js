@@ -3,7 +3,7 @@ const getDb = require('../databse/database').getDb;
 
 exports.admin=(req,res,next)=>{
     res.render('home',{
-        path:'/home'
+        path:'/'
     },
     (err, html) => {
   if (err) {
@@ -123,10 +123,10 @@ exports.postEditProduct=(req,res,next)=>{
       });
 }
 exports.postDeleteProduct=(req,res,next)=>{
-    //const prodId=req.body.productId
-     const prodId=req.params.productId;
-
-    Product.deleteById(prodId).then(()=>{
+   // const prodId=req.body.productId
+     const prodIdd=req.params.productId;
+console.log('current id ',prodIdd)
+    Product.deleteById(prodIdd).then(()=>{
      return console.log('DESTROYED PRODUCT');
     }).then(() => {
       console.log('DESTROYED PRODUCT');

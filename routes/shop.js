@@ -6,7 +6,7 @@ const isAuth=require('./is-auth')
 router.get('/products',shop.getProducts)
 router.post('/cart', shop.postAddToCart);
  router.get('/cart',shop.getCart);
-router.delete('/cart-delete-item:productId',shop.postDeleteFromCart)
+router.delete('/cart-delete-item/:productId',shop.postDeleteFromCart)
  //router.post('/cart-delete-item',shop.postDeleteFromCart)
 router.post('/order',shop.newOrder)
 router.get('/orders',shop.getOrders)
