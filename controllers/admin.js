@@ -37,6 +37,8 @@ exports.postAddProduct=(req,res,next)=>{
     console.log('bodyy',req.body)
     console.log('requser is',req.user)
 const title = req.body.title;
+const author = req.body.author;
+
     //const imageUrl = req.body.imageUrl;
       const image = req.file;
       //const imageUrl=req.body.image;
@@ -44,7 +46,7 @@ const title = req.body.title;
     const price = req.body.price;
     const description = req.body.description;
       const imageUrl = image.path;
-    const product = new Product(title, price, description, imageUrl,null,req.user._id);
+    const product = new Product(title,author, price, description, imageUrl,null,req.user._id);
     console.log(product);
     product
       .save()
@@ -88,6 +90,8 @@ res.render('edit-product',{
 exports.postEditProduct=(req,res,next)=>{
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
+    const updatedAuthor = req.body.author;
+
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
@@ -96,6 +100,7 @@ exports.postEditProduct=(req,res,next)=>{
     .then(product => {
         //console.log('updaaaate1',updatedDesc)
       product.title = updatedTitle;
+      product.author=updatedAuthor;
       product.price = updatedPrice;
       product.idUser=req.user._id;
       //console.log('updaaaate1',product.description)
@@ -118,10 +123,15 @@ exports.postEditProduct=(req,res,next)=>{
       });
 }
 exports.postDeleteProduct=(req,res,next)=>{
-    const prodId=req.body.productId
+    //const prodId=req.body.productId
+     const prodId=req.params.productId;
 
     Product.deleteById(prodId).then(()=>{
-      res.redirect('/admin/products')})
+     return console.log('DESTROYED PRODUCT');
+    }).then(() => {
+      console.log('DESTROYED PRODUCT');
+      res.json({ message: 'Success!' });
+    })
     .catch(err => {
         console.log(err);
         res.status(500).json( 

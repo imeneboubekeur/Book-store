@@ -8,6 +8,9 @@
       <div class="linkss">
         <div class="menu-icon" id="menu-icon">☰</div>
    <ul class="nav-links" id="nav-links">
+     <li>
+    <a href="/home">Home</a>
+  </li>
     <li>
     <a href="/admin/add-product">Add Product</a>
   </li>
@@ -59,12 +62,14 @@
                                 </div>
                             <!--</header>-->
                             <div class="card_image">
+                                                              <a href="/products/<%= product._id %>">
+
                                 <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-                                
+                                                              </a>
                             </div>
-                            <p class="product_description">
-                                    <%= product.description %>
-                                </p>
+                            <div class="product_description">
+                                  <p>  <%= product.description %></p>
+                            </div>
                             <div class="card_content">
                                 <h2 class="product_price">$
                                     <%= product.price %>
@@ -73,10 +78,14 @@
                             </div>
                            <div class="card_actions">
                                     <a href="/admin/edit-product/<%= product._id %>" class="btn">Edit</a>
-                                    <form action="/admin/delete-product" method="POST">
-                                        <input type="hidden" value="<%= product._id %>" name="productId">
-                                        <button class="btn" type="submit">Delete</button>
-                                    </form>
+                                    <!--<form action="/admin/delete-product" method="POST">
+                                        <input class="delete0" type="hidden" value="<%= product._id %>" name="productId">
+                                        <button class="btn" type="submit" onclick="deleteProduct(this)">Delete</button>
+                                    </form>-->
+                                    
+                                        <input class="delete0" type="hidden" value="<%= product._id %>" name="productId">
+                                        <button class="btn" type="submit" onclick="deleteProduct(this)">Delete</button>
+                                    
                            </div>
                             </form>
 
@@ -94,4 +103,5 @@
                   <%- include('./footer.ejs') %>  
 
         <%- include('./end.ejs') %>   
-                    <script src="/js/banner.js"></script>  
+                    <script src="/js/banner.js"></script> 
+                                        <script src="/js/js1.js"></script>   

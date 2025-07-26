@@ -2,8 +2,10 @@ const getDb = require('../databse/database').getDb;
 const mongodb = require('mongodb');
 
 class Product {
-  constructor(title, price, description, imageUrl,id,idUser) {
+  constructor(title, author,price, description, imageUrl,id,idUser) {
     this.title = title; 
+        this.author = author; 
+
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
@@ -91,6 +93,7 @@ class Product {
         //console.log('updaaate1', product._id)
       return new Product(
         product.title,
+        product.author,
         product.price,
         product.description,
         product.imageUrl,

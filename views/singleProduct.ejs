@@ -13,16 +13,24 @@
 
     <link rel="stylesheet" href="/css/single.css"> </head>
 <body>
-    <section class="banner">
-   <ul class="nav-links">
+     <section class="banner">
+      <div class="bookish">Bookish.com</div>
+      <div class="linkss">
+        <div class="menu-icon" id="menu-icon">☰</div>
+   <ul class="nav-links" id="nav-links">
+    
  
   <li>
     <a href="/products">Books</a>
   </li>
-<% if (user) { %>
+<% if (user && user.role === 'buyer') { %>
 <li>
     <a href="/cart">My Cart</a>
-   </li><% } %>
+   </li>
+   <li>
+    <a href="/orders">My Orders</a>
+   </li>
+   <% } %>
     <li>Contact Us</li>
   <% if (user) { %>
   <li >
@@ -44,7 +52,7 @@
      
     
    </ul>
-
+</div>
 </section>
 <div class="search-bar">
   <form action="/search" method="GET">
@@ -52,16 +60,16 @@
     <button type="submit">Search</button>
   </form>
 </div>
-     <main class="single">
+     <main class="single ">
         <div class="smallTitle">Home > <%= product.title %></div>
         <div class="container">
         <div class="image">
-        <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+        <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
 
         </div>
         <div class="infos">
     <div class="title"><%= product.title %></div>
-    <div class="additions">Brand:Amazona</div>
+    <div class="additions">Author:<%= product.author %></div>
 <div class="additions">Availability:In stock</div>
         <div class="price">$<%= product.price %></div>
                 <div class="description additions"><%= product.description %></div>
@@ -106,8 +114,9 @@ A magical competition between two young illusionists unfolds within a mysterious
                                 
                                 </div>
                             <div class="card__image">
+
                                 <a href="products/<%= product._id %>">
-                                <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+<img src="<%= product.imageUrl %>" alt="<%= product.title %>">
 
                                 </a>
                                 

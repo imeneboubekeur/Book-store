@@ -24,7 +24,7 @@ module.exports=class Order{
             {userId:this.userId,
             items: [  
      
-  ],
+  ],totalPrice:0
         }
          ).catch(err=>{
                 console.error('Error:', err);
@@ -42,14 +42,17 @@ static addToOrders(idUser,prodId,quantity){
         title: product.title,
         price: product.price},
       quantity: quantity})
-      return db.collection('order').updateOne(
+      return db.collection('cart').findOne({idUser:new mongodb.ObjectId(idUser)}).then(cart=>{
+        return db.collection('order').updateOne(
   { userId: idUser },
   {
     $set: {
-      items:order.items
+      items:order.items,totalPrice:cart.totalPrice
     }
   } 
 )
+      })
+      
 })
          })
 }

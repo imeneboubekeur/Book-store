@@ -1,13 +1,51 @@
 <%- include('./head.ejs') %>
 </head>
 <body>
+<main class="cart"></main>
+  <section class="banner">
+        <div class="bookish">Bookish.com</div>
+      <div class="linkss">
+        <div class="menu-icon" id="menu-icon">☰</div>
+   <ul class="nav-links" id="nav-links">
+   <ul class="nav-links">
+ 
+  <li>
+    <a href="/products">Books</a>
+  </li>
 
-  
+<li>
+    <a href="/cart">My Cart</a>
+   </li>
+   <li>
+    <a href="/orders">My Orders</a>
+   </li>
+    <li>Contact Us</li>
+   
+    <% if (user) { %>
+  <li>
+    <form action="/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  </li>
+<% } else { %>
+  <li class="button">
+    <a href="/signup">Signup</a>
+  </li>
+  <li class="button">
+    <a href="/login">Login</a>
+  </li>
+<% } %>
+ 
+    
+   </ul>
+  </div>
+</section> 
   <h1>Your Orders</h1>
 
   <% if (!orders) { %>
     <p class="no-orders">You have no orders yet.</p>
   <% } else { %>
+    <div class="table-wrapper">
     <table>
       <thead>
         <tr>
@@ -22,9 +60,9 @@
       <tbody>
         <% orders.forEach(order => { %>
           <tr>
-            <td><%= order._id %></td>
-            <td><%= new Date(order.createdAt).toLocaleDateString() %></td>
-            <td>
+            <td class="orderId"><%= order._id %></td>
+            <td class="date"><%= new Date(order.createdAt).toLocaleDateString() %></td>
+            <td class="items">
               <ul>
                 <% order.items.forEach(item => { %>
                   <li>
@@ -34,7 +72,7 @@
                 <% }) %>
               </ul>
             </td>
-            
+            <td>$<%= order.totalPrice %></td>
             <td><%= order.status %></td>
             <td>
               <a href="/order/<%= order._id.toString() %>/invoice" target="_blank" class="btn">View Invoice</a>
@@ -44,5 +82,6 @@
       </tbody>
     </table>
   <% } %>
-
+  </div>
+</main>
  <%- include('./end.ejs') %>

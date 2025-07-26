@@ -78,6 +78,95 @@ a:visited {
  
   text-decoration: none;
 }
+
+
+.banner {
+  display:flex;
+  flex-direction: row;
+  padding: 10px 30px;
+  text-align: right; /* aligns inline-block elements to the right */
+gap:5%;
+}
+.linkss {
+    display: inline-block;
+  text-align: right; /* aligns inline-block elements to the right */
+flex:1 1 50%;
+}
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.nav-links li {
+  display: inline-block;
+  margin-left: 20px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.nav-links a:link{
+text-decoration: none;
+}
+ .nav-links a:visited {
+ color:black;
+  text-decoration: none;
+}
+.nav-links  .button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: white;
+  border: 1px solid #05E362;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.nav-links button{
+   padding: 8px 16px;
+  font-size: 14px;
+  background-color: white;
+  border: 1px solid #05E362;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Responsive layout */
+@media (max-width: 650px) {
+  .nav-links li{
+    padding:20px;
+  }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #ffffffbe;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
+.bookish{
+  font-size: 30px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color:#05E362;
+display:inline-block;
+text-align: left;
+
+}
 .arimo-regular{
    font-family: "Arimo", sans-serif;
   font-optical-sizing: auto;
@@ -220,12 +309,7 @@ a:visited {
     margin-top:50px;
 }
 
-.card__image{
-  flex: 1 1 100%;
-  max-width:50%;
-   margin:0 auto;    
 
-}
 .card__image img {
   max-width:50%;
 }
@@ -233,7 +317,6 @@ a:visited {
   text-align: center;
 }
 .product__title{
-    text-align: center;
     margin-bottom:10px;
 }
 .main-container{
@@ -251,7 +334,7 @@ a:visited {
      
 }
 .grid-items{
-   max-width:500px;
+   
   border-right: 1px solid #ddd ;
   
   
@@ -338,3 +421,69 @@ section{
   }
 }
 
+.grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+gap:60px;
+
+     margin-top:50px;
+          margin-bottom:50px;
+
+     
+}
+.grid-items{
+   max-width:500px;
+  border-right: 1px solid #ddd ;
+  
+  
+    
+}
+
+
+
+
+.product__description {
+      
+
+  flex: 1; /* take up remaining space */
+  font-size: 16px;
+  min-width: 100px;
+  height:fit-content;
+}
+    
+
+.product__description{
+    max-width:50%;
+}
+.product__price{
+    color:green;
+}
+.card__actions .btn{
+    display: inline-block;
+  text-decoration: none;
+  padding: 10px 20px;
+  width: 100px;
+  text-align: center;
+  background-color: #05E362;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+}
+.card__actions a,
+.card__actions form {
+  display: inline-block;
+  /*vertical-align:middle;*/
+  margin-right: 10px;
+}
+.card__actions{
+    text-align: left;
+}
+
+.otherPro .product__price{
+  text-align: left;
+  font-size: 13px;;
+}

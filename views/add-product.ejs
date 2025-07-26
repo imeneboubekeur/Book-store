@@ -2,7 +2,13 @@
 </head>
 <body>
     <section class="banner">
-   <ul class="nav-links">
+      <div class="bookish">Bookish.com</div>
+      <div class="linkss">
+        <div class="menu-icon" id="menu-icon">☰</div>
+   <ul class="nav-links" id="nav-links">
+     <li>
+    <a href="/home">Home</a>
+  </li>
     <li>
     <a href="/admin/add-product">Add Product</a>
   </li>
@@ -29,6 +35,7 @@
  
     
    </ul>
+</div>
 
 </section>
     <main class="product-form-page">
@@ -36,7 +43,11 @@
             <div class="form-control">
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" value="">
+            </div> <div class="form-control">
+                <label for="author">Author</label>
+                <input type="text" name="author" id="author" value="">
             </div>
+
            <!-- <div class="form-control">
                 <label for="imageUrl">Image URL</label>
                 <input type="text" name="imageUrl" id="imageUrl" value="">

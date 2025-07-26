@@ -31,7 +31,7 @@ exports.getProducts = (req, res, next) => {
 
     // 1. Get page and perPage from query string
   let page = parseInt(req.query.page) || 1;
-  let perPage = parseInt(req.query.perPage) || 6;
+  let perPage = parseInt(req.query.perPage) || 5;
   let  totalPages
   let pages
     db.collection('products').countDocuments().then (totalUsers=>{   
@@ -47,11 +47,16 @@ exports.getProducts = (req, res, next) => {
     .find({})
     .skip(skip)
     .limit(perPage)
-    .toArray().then(products=>{res.render('products', {
+    .toArray().then(products=>{
+       const start = (page - 1) * perPage + 1;
+      const end = Math.min(start + products.length - 1, totalUsers);
+      res.render('products', {
     prods:products,
     page,
     perPage,
-    totalPages,pages
+    totalPages,pages,totalUsers,
+     startItem: start,
+        endItem: end
   });}).catch(err=>{
           console.error('Error fetching products:', err);
 
@@ -82,10 +87,10 @@ db.collection('products')
   .toArray()
   .then(products => {
      res.render('singleProduct', {
-        product: product,
+      product:product,
         products:products,
         pageTitle: 'All Products',
-        path: '/products'
+       
       });
   })
   .catch(err=>{
@@ -143,7 +148,8 @@ exports.getCart=(req,res,next)=>{
 
 
 exports.postCart = async (req, res, next) => {
-  try {
+
+ try {
     const prodId = req.body.productId;
 
     // Validate ObjectId
@@ -168,7 +174,7 @@ exports.postCart = async (req, res, next) => {
     console.log('the id of your current session is:',req.user._id)
     await req.user.addProduct(new mongodb.ObjectId(prodId), product.price,new mongodb.ObjectId(req.user._id));
     //console.log('Produ ct added to cart:', product);
-
+   
     res.redirect('/cart');
   } catch (error) { 
     console.error('Error in postCart:', error);
@@ -176,6 +182,9 @@ exports.postCart = async (req, res, next) => {
   }
 };
 exports.postAddToCart=(req,res,next)=>{
+  if (req.user.role!="buyer"){
+    return res.redirect('/login')
+  }
     const prodId=req.body.productId;
     
   
@@ -232,6 +241,35 @@ exports.postAddToOrders=(req,res,next)=>{
 
 }
 exports.getOrders=(req,res,next)=>{
+  const db=getDb();
+  return db.collection('order')
+    .find({ userId: new mongodb.ObjectId(req.user._id) })
+    .sort({ createdAt: -1 })       // sort by createdAt descending (newest first)
+    
+    .toArray()                     // toArray returns an array of matched docs
+    .then(orders => {
+          console.log('ORDERS SENT TO EJS:', orders);  // ✅ Check _id here
+
+        res.render('orders', {
+      
+      pageTitle: 'orders', 
+      path: '/orders',
+      orders:orders,
+        
+      isAuthenticated: req.session.isLoggedIn
+    });          // the latest order
+    }) .catch(err => {
+        console.log(err);
+        res.status(500).json( 
+        { status:'fails',message: 'server error!' });
+      });
+    
+    
+   
+  
+}
+
+exports.getOrder=(req,res,next)=>{
   const db=getDb();
   return db.collection('order')
     .find({ userId: new mongodb.ObjectId(req.user._id) })
@@ -301,6 +339,7 @@ exports.newOrder=(req,res,next)=> {
           const order = {
             userId: new mongodb.ObjectId(req.user._id),
             items: orderItems,
+            totalPrice:cart.totalPrice,
             createdAt: new Date(),
             status: 'pending'
             
@@ -311,7 +350,7 @@ exports.newOrder=(req,res,next)=> {
         })
       })
     .then(() => {
-      res.redirect('/orders')
+      res.redirect('/order')
       console.log('Order created and cart cleared');
     })
     .catch(err => {

@@ -14,7 +14,7 @@ module.exports= class User {
     console.log(this.email)
     let id=this._id
     let user = { email:this.email, password:this.password,role:this.role  };
-    const db=getDb();
+    const db=getDb(); 
    return db.collection('user')
   .insertOne(user)
   .catch(err => {

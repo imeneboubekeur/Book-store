@@ -3,20 +3,27 @@
 </head>
 
     <body>
-       <section class="banner">
-   <ul class="nav-links">
+        <section class="banner">
+      <div class="bookish">Bookish.com</div>
+      <div class="linkss">
+        <div class="menu-icon" id="menu-icon">☰</div>
+   <ul class="nav-links" id="nav-links">
+    
  
   <li>
     <a href="/products">Books</a>
   </li>
-
+<% if (user && user.role === 'buyer') { %>
 <li>
     <a href="/cart">My Cart</a>
    </li>
+   <li>
+    <a href="/orders">My Orders</a>
+   </li>
+   <% } %>
     <li>Contact Us</li>
-   
-    <% if (user) { %>
-  <li>
+  <% if (user) { %>
+  <li >
     <form action="/logout" method="POST">
       <button type="submit">Logout</button>
     </form>
@@ -29,11 +36,14 @@
     <a href="/login">Login</a>
   </li>
 <% } %>
- 
+
+
+   
+     
     
    </ul>
-
-</section> 
+</div>
+</section>
 <div class="search-bar">
   <form action="/search" method="GET">
     <input type="text" name="query" placeholder="Search books..." required>
@@ -65,7 +75,7 @@
                         
         <tr >               
     <td>              
- <img src="/<%= p.imageUrl %>" alt="<%= p.title %>">
+ <img src="<%= p.imageUrl %>" alt="<%= p.title %>">
 </td>
     <td><%= p.title %></td>
     <td>$<%= p.price %></td>
@@ -102,29 +112,7 @@
             <% } %>
             
         </main>
-        <footer class="footer">
-  <div class="footer-content">
-    <div class="footer-section about">
-      <h3>About Us</h3>
-      <p>We sell amazing books to help you grow.</p>
-    </div>
-    <div class="footer-section links">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/books">Books</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-section contact">
-      <h3>Contact</h3>
-      <p>Email: support@example.com</p>
-      <p>Phone: +123 456 7890</p>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    &copy; 2025 BookStore. All rights reserved.
-  </div>
-</footer>
+             <%- include('./footer.ejs') %>
+
         <%- include('./end.ejs') %>
                             <script src="/js/js.js"></script>    

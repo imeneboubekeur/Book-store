@@ -12,10 +12,14 @@
   <li>
     <a href="/products">Books</a>
   </li>
-<% if (user) { %>
+<% if (user && user.role === 'buyer') { %>
 <li>
     <a href="/cart">My Cart</a>
-   </li><% } %>
+   </li>
+   <li>
+    <a href="/orders">My Orders</a>
+   </li>
+   <% } %>
     <li>Contact Us</li>
   <% if (user) { %>
   <li >
@@ -56,17 +60,16 @@
     </div>
 
     <!-- Showing range -->
-    <div class="text-muted">Showing <%= page %> to <%= perPage %> of <%= pages %> items</div>
+    <div class="text-muted">Showing <%= startItem %> to <%= endItem %> of <%= totalUsers %> items</div>
 
     <!-- Show dropdown -->
     <div class="filter-group">
       <label for="show-count">Show:</label>
-      <select id="show-count">
-        <option>10</option>
-        <option>25</option>
-        <option>50</option>
-        <option>100</option>
-      </select>
+     <select id="per-page-select">
+  <option value="3" <%= perPage == 3 ? 'selected' : '' %>>3</option>
+  <option value="5" <%= perPage == 5 ? 'selected' : '' %>>5</option>
+  <option value="6" <%= perPage == 6 ? 'selected' : '' %>>6</option>
+</select>
     </div>
 
     <!-- Sort dropdown -->
@@ -92,10 +95,10 @@
                                 
                                 </div>
                             <div class="card__image">
-                                <a href="products/<%= product._id %>">
+                                <a href="/products/<%= product._id.toString() %>">
                                 <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
 
-                                </a>
+                              </a>
                                 
                             </div>
                             <div class="card__content">
@@ -147,5 +150,14 @@
 
         <%- include('./end.ejs') %>  
        
- 
+ <script>
+  document.getElementById('per-page-select').addEventListener('change', function () {
+    const perPage = this.value;
+    const params = new URLSearchParams(window.location.search);
+    params.set('perPage', perPage);
+    params.set('page', 1); // Reset to page 1 on perPage change
+    window.location.href = `/products?${params.toString()}`;
+  });
+</script>
+
                     <script src="/js/banner.js"></script>  

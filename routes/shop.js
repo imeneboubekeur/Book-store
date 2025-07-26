@@ -11,6 +11,8 @@ router.delete('/cart-delete-item:productId',shop.postDeleteFromCart)
 router.post('/order',shop.newOrder)
 router.get('/orders',shop.getOrders)
 router.get('/order/:orderId/invoice',shop.getPDF)
+router.get('/order',shop.getOrder) 
+
 router.get('/products/:prodId',shop.signleProduct)
 router.get('/search',shop.search)
 router.post('/create-checkout-session',shop.postPay)
