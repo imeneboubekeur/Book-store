@@ -28,16 +28,16 @@
    <% } %>
     <li>Contact Us</li>
     <% if (user) { %>
-  <li >
+  <li class="classButton">
     <form action="/logout" method="POST">
       <button type="submit">Logout</button>
     </form>
   </li>
 <% } else { %>
-  <li class="button">
+  <li class="button classButton">
     <a href="/signup">Signup</a>
   </li>
-  <li class="button">
+  <li class="button classButton">
     <a href="/login">Login</a>
   </li>
 <% } %>

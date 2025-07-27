@@ -114,8 +114,12 @@ text-decoration: none;
     padding: 1rem;
     border-radius: 8px;
   }
-
+.nav-links.show  .classButton {
+    text-align: center;
+    margin-top:10px;
+  }
   .nav-links.show {
+    
     display: flex;
   }
 
