@@ -98,9 +98,18 @@ text-decoration: none;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.bookish a:link{
+    color:#05E362;
 
+  text-decoration: none;
+}
+.bookish a:visited{
+    color:#05E362;
+
+  text-decoration: none;
+}
 /* Responsive layout */
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   .nav-links li{
     padding:20px;
   }

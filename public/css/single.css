@@ -99,7 +99,7 @@ text-decoration: none;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 /* Responsive layout */
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   .nav-links li{
     padding:20px;
   }
