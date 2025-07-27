@@ -466,3 +466,8 @@ border-radius: 8px;
   color:#05E362;
   
 }
+@media (max-width: 600px) {
+  .grid {
+grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
