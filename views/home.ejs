@@ -2,36 +2,16 @@
 
 </head>
 <body>
-<section class="banner">
-   <div class="bookish">Bookish.com</div>
-      <div class="linkss">
-        <div class="menu-icon" id="menu-icon">☰</div>
-   <ul class="nav-links" id="nav-links">
- 
-  
+    <%- include('./banner.ejs') %>
 
-<li>
-    <a href="/products"> Books</a>
-   </li>
-    <li>Contact us</li>
-   
-    <li class="button">
-    <a href="/signup">Signup</a>
-  </li>
-  <li class="button">
-    <a href="/login">Login</a>
-  </li>  
-    
-   </ul>
-      </div>
-
-</section>
 <section class="description">
     <p>Are you ready to<br> explore more books?</p>
     <p>Simplicity in design is not about removing elements, but about focusing on what truly matters. A clean and well-structured interface helps users navigate with ease and clarity</p>
-    <button>EXPLORE</button>
+     <form action="/products" method="GET">
+      <button type="submit">EXPLORE</button>
+    </form>
 </section>
            <%- include('./footer.ejs') %>  
 
 <%- include('./end.ejs') %>  
-                    <script src="/js/banner.js"></script>  
+                    <script src="/js/banner.js"></script>

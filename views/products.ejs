@@ -2,49 +2,8 @@
 </head>
 
 <body>
-    <section class="banner">
-      <div class="bookish">Bookish.com</div>
-      <div class="linkss">
-        <div class="menu-icon" id="menu-icon">☰</div>
-   <ul class="nav-links" id="nav-links">
-    
-  <li>
-    <a href="/">Home</a>
-  </li>
-  <li>
-    <a href="/products">Books</a>
-  </li>
-<% if (user && user.role === 'buyer') { %>
-<li>
-    <a href="/cart">My Cart</a>
-   </li>
-   <li>
-    <a href="/orders">My Orders</a>
-   </li>
-   <% } %>
-    <li>Contact Us</li>
-  <% if (user) { %>
-  <li >
-    <form action="/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-  </li>
-<% } else { %>
-  <li class="button">
-    <a href="/signup">Signup</a>
-  </li>
-  <li class="button">
-    <a href="/login">Login</a>
-  </li>
-<% } %>
+        <%- include('./banner.ejs') %>
 
-
-   
-     
-    
-   </ul>
-</div>
-</section>
 <div class="search-bar">
   <form action="/search" method="GET">
     <input type="text" name="q" placeholder="Search books..." required>

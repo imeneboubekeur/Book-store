@@ -3,47 +3,8 @@
 </head>
 
     <body>
-        <section class="banner">
-      <div class="bookish">Bookish.com</div>
-      <div class="linkss">
-        <div class="menu-icon" id="menu-icon">☰</div>
-   <ul class="nav-links" id="nav-links">
-    
- 
-  <li>
-    <a href="/products">Books</a>
-  </li>
-<% if (user && user.role === 'buyer') { %>
-<li>
-    <a href="/cart">My Cart</a>
-   </li>
-   <li>
-    <a href="/orders">My Orders</a>
-   </li>
-   <% } %>
-    <li>Contact Us</li>
-  <% if (user) { %>
-  <li >
-    <form action="/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-  </li>
-<% } else { %>
-  <li class="button">
-    <a href="/signup">Signup</a>
-  </li>
-  <li class="button">
-    <a href="/login">Login</a>
-  </li>
-<% } %>
+       <%- include('./banner.ejs') %>
 
-
-   
-     
-    
-   </ul>
-</div>
-</section>
 <div class="search-bar">
   <form action="/search" method="GET">
     <input type="text" name="query" placeholder="Search books..." required>
@@ -51,7 +12,9 @@
   </form>
 </div>
         <main class="cart">
-                    <div class="title"><h1 class="arimo-regular">SHOPPING CART</h1></div>
+                    
+            <% if (products.length > 0) { %>
+              <div class="title"><h1 class="arimo-regular">SHOPPING CART</h1></div>
             <div class="table-wrapper">
 
             <table >
@@ -68,7 +31,6 @@
    </thead>
  
  
-            <% if (products.length > 0) { %>
                 
                     <% products.forEach(p => { %>
                     <tbody>    
@@ -98,7 +60,7 @@
              </table>
              </div>
              <div class="totalPrice">
-             <div class="total">Total Price:<span class="priceT"> <%= cart.totalPrice %>$</span></div>
+             <div class="total">Total Price:<span class="priceT"> $<%= cart.totalPrice %></span></div>
                 <form action="/order" method="POST">
                                
                                 <button class="btnOrder" type="submit" >Order now!</button>
@@ -112,7 +74,11 @@
             <% } %>
             
         </main>
-             <%- include('./footer.ejs') %>
 
+             <%- include('./footer.ejs') %>
+    </body>
+   </html> 
         <%- include('./end.ejs') %>
-                            <script src="/js/js.js"></script>    
+                            <script src="/js/js.js"></script>
+                                                <script src="/js/banner.js"></script> 
+    

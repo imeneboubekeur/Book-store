@@ -1,47 +1,10 @@
 <%- include('./head.ejs') %>
 </head>
 <body>
-<main class="cart"></main>
-  <section class="banner">
-        <div class="bookish">Bookish.com</div>
-      <div class="linkss">
-        <div class="menu-icon" id="menu-icon">☰</div>
-   <ul class="nav-links" id="nav-links">
-   <ul class="nav-links">
- <li>
-    <a href="/">Home</a>
-  </li>
-  <li>
-    <a href="/products">Books</a>
-  </li>
+        <%- include('./banner.ejs') %>
 
-<li>
-    <a href="/cart">My Cart</a>
-   </li>
-   <li>
-    <a href="/orders">My Orders</a>
-   </li>
-    <li>Contact Us</li>
-   
-    <% if (user) { %>
-  <li>
-    <form action="/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-  </li>
-<% } else { %>
-  <li class="button">
-    <a href="/signup">Signup</a>
-  </li>
-  <li class="button">
-    <a href="/login">Login</a>
-  </li>
-<% } %>
- 
-    
-   </ul>
-  </div>
-</section> 
+<main class="cart">
+
   <h1>Your Orders</h1>
 
   <% if (!orders) { %>
@@ -76,7 +39,7 @@
             </td>
             <td>$<%= order.totalPrice %></td>
             <td><%= order.status %></td>
-            <td>
+            <td class="invoice">
               <a href="/order/<%= order._id.toString() %>/invoice" target="_blank" class="btn">View Invoice</a>
             </td>
           </tr>
@@ -87,3 +50,5 @@
   </div>
 </main>
  <%- include('./end.ejs') %>
+                     <script src="/js/banner.js"></script> 
+

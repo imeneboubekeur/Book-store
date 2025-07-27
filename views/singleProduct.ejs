@@ -13,52 +13,11 @@
 
     <link rel="stylesheet" href="/css/single.css"> </head>
 <body>
-     <section class="banner">
-      <div class="bookish">Bookish.com</div>
-      <div class="linkss">
-        <div class="menu-icon" id="menu-icon">☰</div>
-   <ul class="nav-links" id="nav-links">
-    
- <li>
-    <a href="/">Home</a>
-  </li>
-  <li>
-    <a href="/products">Books</a>
-  </li>
-<% if (user && user.role === 'buyer') { %>
-<li>
-    <a href="/cart">My Cart</a>
-   </li>
-   <li>
-    <a href="/orders">My Orders</a>
-   </li>
-   <% } %>
-    <li>Contact Us</li>
-  <% if (user) { %>
-  <li >
-    <form action="/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-  </li>
-<% } else { %>
-  <li class="button">
-    <a href="/signup">Signup</a>
-  </li>
-  <li class="button">
-    <a href="/login">Login</a>
-  </li>
-<% } %>
+         <%- include('./banner.ejs') %>
 
-
-   
-     
-    
-   </ul>
-</div>
-</section>
 <div class="search-bar">
   <form action="/search" method="GET">
-    <input type="text" name="query" placeholder="Search books..." required>
+    <input type="text" name="q" placeholder="Search books..." required>
     <button type="submit">Search</button>
   </form>
 </div>
@@ -76,19 +35,20 @@
         <div class="price">$<%= product.price %></div>
                 <div class="description additions"><%= product.description %></div>
                 <div class="card__actions">
-                  <% if (user && user.role==='buyer') { %>
-                            <form action="/cart" method="post">
-                                <input type="hidden" name="productId" value="<%= product._id %>">  
-                                <button class="btn"  type="submit">Add to Cart</button>
-
-                            </form>
-                            <% } else { %>
+                  
+                           
+                             <% if (user && user.role==='admin') { %>
                                                                   <a href="/admin/edit-product/<%= product._id %>" class="btn">Edit</a>
 
                                         <form action="/admin/delete-product" method="POST">
                                         <input class="delete0" type="hidden" value="<%= product._id %>" name="productId">
                                         <button class="btn" type="submit" onclick="deleteProduct(this)">Delete</button>
-                                    </form>
+                                    </form> <% } else { %>
+                                     <form action="/cart" method="post">
+                                <input type="hidden" name="productId" value="<%= product._id %>">  
+                                <button class="btn"  type="submit">Add to Cart</button>
+
+                            </form>
                                         <% } %>
                             </div>
 </div>
@@ -126,7 +86,7 @@ A magical competition between two young illusionists unfolds within a mysterious
                                 </div>
                             <div class="card__image">
 
-                                <a href="products/<%= product._id %>">
+                                <a href="/products/<%= product._id %>">
 <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
 
                                 </a>
@@ -183,3 +143,4 @@ A magical competition between two young illusionists unfolds within a mysterious
 </footer>
 <%- include('./end.ejs') %>   
                                         <script src="/js/js1.js"></script>   
+                                                            <script src="/js/banner.js"></script> 

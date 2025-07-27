@@ -102,7 +102,6 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
-  
   next();
 });
 

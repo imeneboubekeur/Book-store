@@ -1,43 +1,8 @@
 <%- include('./head.ejs') %>
 </head>
 <body>
-<section class="banner">
-      <div class="bookish">Bookish.com</div>
-      <div class="linkss">
-        <div class="menu-icon" id="menu-icon">☰</div>
-   <ul class="nav-links" id="nav-links">
-     <li>
-    <a href="/">Home</a>
-  </li>
-    <li>
-    <a href="/admin/add-product">Add Product</a>
-  </li>
+    <%- include('./banner.ejs') %>
 
-<li>
-    <a href="/admin/products">My Books</a>
-   </li>
-    
-    <li>Contact Us</li>
-    <% if (user) { %>
-  <li >
-    <form action="/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-  </li>
-<% } else { %>
-  <li class="button">
-    <a href="/signup">Signup</a>
-  </li>
-  <li class="button">
-    <a href="/login">Login</a>
-  </li>
-<% } %>
- 
-    
-   </ul>
-</div>
-
-</section>
 <main>
         <form class="product-form" action="/admin/edit-product" method="POST">
             <div class="form-control">
@@ -62,3 +27,4 @@
 
             <button class="btn" type="submit">Update Product</button>
         </form>
+                            <script src="/js/banner.js"></script> 

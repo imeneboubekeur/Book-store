@@ -79,6 +79,12 @@ exports.getLogin = (req, res, next) => {
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
   const db=getDb();
+  if (password!=confirmPassword){
+        req.flash('error', 'Password and confirmed password are not the same!');
+
+    return res.redirect('/signup');
+     
+  }
 db.collection('user').findOne({email:email}).then(userDoc=>{
   if (userDoc) {
     req.flash('error', 'E-Mail exists already, please pick a different one.');
@@ -95,11 +101,7 @@ db.collection('user').findOne({email:email}).then(userDoc=>{
                 const cart=new Cart(user._id)
                  cart.save()
             })
-          }).then(()=>{
-            return db.collection('user').findOne({email:email}).then(user=>{
-                const order=new Order(user._id)
-                 order.save()}) })
-          .then(() => {
+          }).then(() => {
               res.redirect('/login');
             })
             .catch(err => {
@@ -155,9 +157,9 @@ db.collection('user').findOne({email:email}).then(userDoc=>{
 
   const mailOptions = {
     from: 'iboubekeur72@gmail.com',
-    to: 'imenemimiii09@gmail.com',
+    to: req.body.email,
     subject: 'Password Reset',
-    html: `<p>Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password. This link expires in 1 hour.</p>`
+    html: `<p>Click <a href="https://book-store-gzhn.onrender.com/reset-password/${token}">here</a> to reset your password. This link expires in 1 hour.</p>`
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
@@ -196,6 +198,8 @@ const token = req.params.token;
       password: hashedPassword
     }}
     )
+   }).then(()=>{
+    res.redirect('/login')
    })
  }).catch(err => {
         console.log(err);

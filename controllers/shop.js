@@ -194,7 +194,7 @@ exports.postCart = async (req, res, next) => {
   }
 };
 exports.postAddToCart=(req,res,next)=>{
-  if (req.user.role!="buyer"){
+  if (!req.user){
     return res.redirect('/login')
   }
     const prodId=req.body.productId;
