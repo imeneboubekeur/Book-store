@@ -108,6 +108,17 @@ text-decoration: none;
 
   text-decoration: none;
 }
+.pages a:link{
+    
+
+  text-decoration: none;
+}
+.pages a:visited{
+    color:#666;
+
+  text-decoration: none;
+}
+
 /* Responsive layout */
 @media (max-width: 850px) {
   .nav-links li{
